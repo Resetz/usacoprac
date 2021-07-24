@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <queue>
+#include <deque>
+#include <bitset>
+#include <iterator>
+#include <list>
+#include <stack>
+#include <map>
+#include <set>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <limits>
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
+using namespace std;
+int n;
+
+void solve() {
+    int n;
+    cin >> n;
+    unsigned long long ans = 0;
+    for (int i = 1 ; i <= n/2 ; ++i) {
+        ans += i * 1ll * (i);
+    }
+    cout << ans * 8<< endl;
+}
+int main() {
+    cin >> n;
+    while (n--) solve();
+}
