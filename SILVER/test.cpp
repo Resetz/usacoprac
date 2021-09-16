@@ -656,6 +656,8 @@ int main() {
     int n;
 
     double num = 1.12345; // 5 decimal points of prescision.
+    int i = 12'1; // digit separator is ', a single quote character for integer literals only.
+    cout << i << endl;
     cout << fixed << showpoint << setprecision(2); // but set the prescision to 2 | use fixed to have it apply to all cout statements
     cout << /*set the fill to '_'*/ setfill(' ') << /*10 units and right shift*/ setw(10) << num << endl;
     cout << left /*left justify*/ << /*set the fill to '_'*/ setfill(' ') << /*10 units and right shift*/ setw(10) << num << endl;
@@ -1046,5 +1048,6 @@ int main() {
     idoublel.remove(2);
     printdoubly<int>(idoublel);
     cout << endl;
+    class1::count;
 
 }

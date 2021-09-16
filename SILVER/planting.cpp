@@ -21,25 +21,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
-
+#include <iomanip>
 using namespace std;
-int dp[1000001] = {0};
-int main() {
 
-    //divisor thing
-    int n;
-    cin >> n;
-    
-    for (int i = 1 ; i <= n ; i++) {
-        for (int j = i + i; j <= n ; j+=i) {
-            dp[j]++;
-        }
-    }
-    dp[0] = 1;
-    long long ans = 1;
-    for (int i = 1 ; i <= n ; i ++) {
-        dp[i] = (dp[i] + ans) % 998244353;
-        ans = (dp[i] + ans) % 998244353;
-    }
-    cout << dp[n] << endl;
+#define all(n) n.begin(), n.end()
+using namespace std;
+
+unordered_map<int, vector<int>> pos;
+int main() {
+    //todo
 }

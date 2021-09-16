@@ -21,25 +21,35 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <iomanip>
 
+#define all(n) n.begin(), n.end()
 using namespace std;
-int dp[1000001] = {0};
-int main() {
 
-    //divisor thing
+int a[50];
+int b[50];
+
+void solve() {
     int n;
     cin >> n;
-    
-    for (int i = 1 ; i <= n ; i++) {
-        for (int j = i + i; j <= n ; j+=i) {
-            dp[j]++;
+    bool prev;
+    char c;
+    cin >> c;
+    prev = c == 'a';
+    bool done = false;
+    for (int i = 0; i < n-1; i++) {
+        cin >> c;
+        if ((prev != (c == 'a')) && !done) {
+            cout << i + 1 << " " << i + 2 << endl;
+            done = true;
         }
+        prev = c == 'a';
     }
-    dp[0] = 1;
-    long long ans = 1;
-    for (int i = 1 ; i <= n ; i ++) {
-        dp[i] = (dp[i] + ans) % 998244353;
-        ans = (dp[i] + ans) % 998244353;
-    }
-    cout << dp[n] << endl;
+    if (!done) cout << "-1 -1" << endl;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    while (n--) solve();
 }
