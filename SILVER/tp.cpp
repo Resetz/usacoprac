@@ -27,38 +27,50 @@
 using namespace std;
 
 int arr[100000]; // position i contains arr[i]
-vector<vector<pair<long long, long long>>> tps;
+vector<vector<pair<long long, long long>>> wormholes; // wormholes
 int n, m;
 
 bool check(long long k) {
+
     bool visited[100000] = {false};
-    int found = 0;
-    while (found != n) {
-        queue<long long> q;
-        set<long long> v;
-        set<long long> g;
+    int found = 0; // store the amount of cows we've visited;
+    while (found != n) { // stop when we visit all cows.
+        queue<long long> q; // queue for bfs
+
+        set<long long> v; // positions visited
+        set<long long> g; // cows seen
         int next = -1;
+        
+        // find the next unvisited cow
         for (next = 0 ; next < n ; next++) {
             if (!visited[next]) {
+                //found it
                 break;
             }
         }
+        
+        // start dfs from this node
         q.push(next);
         while (!q.empty()) {
-            long long f = q.front();
+            // regular bfs stuff
+            long long pos = q.front();
             q.pop();
-            if ( visited[f] ) continue;
+            if ( visited[pos] ) continue;
+            visited[pos] = true;
+
             found++;
-            v.insert(f);
-            g.insert(arr[f]);
-            visited[f] = true;
-            for (int i = 0 ; i < tps[f].size(); i++) {
-                if (tps[f][i].second >= k) { 
-                    q.push(tps[f][i].first);
+            v.insert(pos); // add the position
+            g.insert(arr[pos]); // add the cow
+
+            // more regular dfs
+            for (int i = 0 ; i < wormholes[pos].size(); i++) {
+                if (wormholes[pos][i].second >= k) { 
+                    q.push(wormholes[pos][i].first);
                 }
             }
-        }
-        //if (v.empty() || g.empty()) { return true; }
+        }   
+
+        // if the cows visited are not equal to the positions at any point.
         if (v != g) return false;
     }
     return true;
@@ -67,39 +79,32 @@ bool check(long long k) {
 int main() {
     cin >> n >> m;
 
-    tps.resize(n);
-    //int last = 0;
-    //bool sorted = true;
+    wormholes.resize(n);
     for (int i = 0 ; i < n ; i++) {
-        
-        
         cin >> arr[i];
         arr[i]--;
-        // which one of these is it?
-        /*
-        int num;
-        cin >> num;
-        num--;
-        arr[num] = i;
-        */
     }
+
+    // check if there is a need to use a any wormhole
     if (is_sorted(arr, arr + n)) {
         cout << -1 << endl;
         return 0;   
     }
     
 
-    vector<long long> c;
+    vector<long long> c; // array to store costs; more effective to b search over opetion rather than all.
     for (int i = 0 ; i < m ; i++) {
         long long f, t, s;
         cin >> f >> t >> s;
         c.push_back(s);
         f--; t--;
-        tps[f].push_back({t, s});
-        tps[t].push_back({f, s});
+        wormholes[f].push_back({t, s});
+        wormholes[t].push_back({f, s});
     }
     sort(all(c));
 
+
+    // binary search
     long long high = c.size(), low = 0, mid;
     long long ans = 0;
     while (high > low) {
