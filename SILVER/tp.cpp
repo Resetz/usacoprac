@@ -92,7 +92,7 @@ int main() {
     }
     
 
-    vector<long long> c; // array to store costs; more effective to b search over opetion rather than all.
+    vector<long long> c; // array to store costs; more effective to b search over options rather than all numbers.
     for (int i = 0 ; i < m ; i++) {
         long long f, t, s;
         cin >> f >> t >> s;
