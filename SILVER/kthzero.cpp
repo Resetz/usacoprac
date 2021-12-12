@@ -30,7 +30,7 @@ int main() {
         cout << "? " << 1 << " " << n << endl;
         cin >> zeroes;
         totalZeroes = n - zeroes;
-        int ans = 0;
+        int ans = 1;
         while (high >= low) {
             middle = (high+low)/2;
             cout << "? " << 1 << " " << middle+1 << endl;
