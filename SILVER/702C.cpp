@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 int main() {
     int n, k;
     cin >> n >> k;
@@ -28,14 +29,32 @@ int main() {
     }
 
     int ans = -1;
-    for (int i = 0 ; i < k ; i++) {
-        if (towers.lower_bound(cities[i]) == towers.end()) {
-            ans = max(ans, cities[i] - high);
+    for (int i = 0 ; i < n ; i++) {
+        int a, b;
+        if (cities[i] <= low) {
+            a = low - cities[i];
         } else {
-            ans  = max(ans, cities[i] - high);
-            
+            set<int>::iterator it = towers.lower_bound(cities[i]);
+            if (it != towers.begin()) it--;
+            a = cities[i] - *it;
         }
-        ans = max(ans, max(cities[i] - *towers.lower_bound(cities[i]), *towers.upper_bound(cities[i]) - cities[i]));
+        //cout << " " << cities[i] << " ";
+
+        if (cities[i] >= high) {
+            b = cities[i] - high;
+        } else {
+            b = *towers.lower_bound(cities[i]) - cities[i];
+        }
+        
+        //cout << a << " " << b << endl;
+        if (a < 0) {
+            a = INT_MAX;
+        }
+        if (b < 0) {
+            b = INT_MAX;
+        }
+        ans = max(ans, min(a,b));
+        //ans = max(ans, max(cities[i] - *towers.lower_bound(cities[i]), *towers.upper_bound(cities[i]) - cities[i]));
     }
     cout << ans << endl;
 }
