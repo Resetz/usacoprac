@@ -71,45 +71,86 @@ void solve() {
             blobnum++;
         }
     }
+    if (from == to) {
+        cout << 0 << endl;
+        return;
+    }
     //cout << from << " " << to << endl;
 
     //cout << "- " << endl;
-    unsigned long long lasta = -1;
-    unsigned long long lastb = -1;
 
-    unsigned long long ansa = INT_MAX;
-    unsigned long long ansb = INT_MAX;
+    vector<int> adist(n, INT32_MAX);
+    vector<int> bdist(n, INT32_MAX);
+
+    int l, r;
+
+    int firsta, firstb;
+    firsta = firstb = 0;
+
+    vector<ull> a;
+    vector<ull> b;
     for (int i = 0 ; i < n ; i++) {
-        if (tagged[i] == from) {
-            lasta = i;
-        } else if (tagged[i] == to) {
-            lastb = i;
-        } else {
-            if (lasta != -1) {
-                ansa = min(ansa, i - lasta);
-            } 
-            if (lastb != -1) {
-                ansb = min(ansb, i - lastb);
+        if (tagged[i] == from) a.push_back(i);
+        else if (tagged[i] == to) b.push_back(i);
+    }
+    a.push_back(-1);
+    b.push_back(-1);
+
+    l = -1;
+    r = a[0];
+    int next = 1;
+    for (int i = 0 ; i < n ; i++) {
+        if (i == r) {
+            l = r;
+            r = a[next];
+            next++;
+            continue;
+        }
+        if (tagged[i] != from && tagged[i] != to) {
+            int d1, d2;
+            d1 = abs(r - i);
+            d2 = abs(i - l);
+            if (r == -1) {
+                d1 = INT32_MAX;
             }
+            if (l == -1) {
+                d2 = INT32_MAX;
+            }
+            adist[tagged[i]] = min(adist[tagged[i]], min(d1, d2));
+        }
+    }
+    
+    l = -1;
+    r = b[0];
+    next = 1;
+    for (int i = 0 ; i < n ; i ++) {
+        if (i == r) {
+            l = r;
+            r = b[next];
+            next++;
+            continue;
+        }
+        if (tagged[i] != from && tagged[i] != to) {
+            int d1, d2;
+            d1 = abs(r - i);
+            d2 = abs(i - l);
+            if (r == -1) {
+                d1 = INT32_MAX;
+            }
+            if (l == -1) {
+                d2 = INT32_MAX;
+            }
+            bdist[tagged[i]] = min(bdist[tagged[i]], min(d1, d2));
         }
     }
 
-    lasta = -1;
-    lastb = -1;
-    for (int i = n-1 ; i >= 0 ; i--) {
-        if (tagged[i] == from) {
-            lasta = i;
-        } else if (tagged[i] == to) {
-            lastb = i;
-        } else {
-            if (lasta != -1) {
-                ansa = min(ansa, lasta - i);
-            } 
-            if (lastb != -1) {
-                ansb = min(ansb, lastb - i);
-            }
+    ull bestinter = INT64_MAX;
+    for (int i = 0 ; i < blobnum ; i++) {
+        if (i != from && i != to) {
+            bestinter = min(bestinter, (ull)adist[i]*adist[i] + (ull)bdist[i]*bdist[i]);
         }
     }
+
     int last = -1;
     ull lastpos;
     ull ansdir = INT_MAX;
@@ -122,12 +163,13 @@ void solve() {
             lastpos = i;
         }
     }
-    unsigned long long ans = ansa * ansa + ansb * ansb;
-    cout << min(ans, ansdir*ansdir) << endl;
-    
+    cout << min(bestinter, ansdir*ansdir) << endl;
 }
 
 int main() {
+
+
+
     ull n;
 
     cin >> n;
