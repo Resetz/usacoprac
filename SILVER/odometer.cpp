@@ -1,3 +1,4 @@
+// Problem : http://www.usaco.org/index.php?page=viewproblem2&cpid=430
 #include <iostream>
 #include <string>
 #include <vector>
