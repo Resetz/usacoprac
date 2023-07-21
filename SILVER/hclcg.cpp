@@ -4,12 +4,6 @@
 using namespace std;
 
 int main() {
-
-    #ifndef LOCAL
-    freopen("cardgame.in", "r", stdin);
-    freopen("cardgame.out", "w", stdout);
-    #endif
-
     int n;
     cin >> n;
 

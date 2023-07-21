@@ -8,9 +8,6 @@ using namespace std;
 
 bool marked[100];
 int main() {
-    //stolen from someone to use files as stdin/out
-	freopen("cbarn.in","r", stdin);
-	freopen("cbarn.out","w", stdout);
 
     int N; cin >> N; // N < 1000 : N < 1000000
     vector<long long> A(N);

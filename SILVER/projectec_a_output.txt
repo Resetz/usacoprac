@@ -1,0 +1,18 @@
+Representation of Graph as a Adjacency Matrix: 
+0 1 1 0 
+0 0 1 1
+0 0 0 1
+0 0 0 0
+
+Representation of Graph as a Adjacency List:        
+0: b c
+1: c d
+2: d
+3:
+
+Representation of Graph as a Map:
+a: b c
+b: c d
+c: d
+d:
+graphrep: exec time: 7ms

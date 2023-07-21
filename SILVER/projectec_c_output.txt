@@ -1,0 +1,7 @@
+Shortest path from a to a is 0
+Shortest path from a to b is 3
+Shortest path from a to c is 2
+Shortest path from a to d is 8
+Shortest path from a to e is 10
+Shortest path from a to z is 13
+dijkstra: exec time: 2ms

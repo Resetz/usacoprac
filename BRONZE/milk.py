@@ -1,23 +1,31 @@
-import math
-n, k = [int(n) for n in input("").strip().split()]
-data = []
+milk = [0, 0, 0]
+size = [0, 0, 0]
 
-for _ in range(k):
-    data.append([int(n) for n in input("").split().strip()])
+for x in range(3):
+    size[x], milk[x] = (int(x) for x in input().strip().split(" "))
 
-def get_price(a):
-    return a[0]
+#simulate 99 pours
+for x in range(33):
+    #pouring from bucket 1 -> 2
+    topour = min(size[1]-milk[1], milk[0])
+    milk[0] -= topour
+    milk[1] += topour
 
-sorted(data, key=get_price)
+    #pouring from bucket 2 -> 3
+    topour = min(size[2]-milk[2], milk[1])
+    milk[1] -= topour
+    milk[2] += topour
 
-index = 0
-money = 0
-while n - data[index][1] >= 0:
-    n -= data[index][1] 
-    money += data[index][0] * data[index][1] 
-    index+=1
+    #pouring from bucket 3 -> 1
+    topour = min(size[0]-milk[0], milk[2])
+    milk[2] -= topour
+    milk[0] += topour
 
-if (n == 0):
-    print(money)
-else:
-    print(money + ceil(data[index][0] / n))
+#finish last pour
+topour = min(size[1]-milk[1], milk[0])
+milk[0] -= topour
+milk[1] += topour
+
+print(milk[0])
+print(milk[1])
+print(milk[2])
